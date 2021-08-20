@@ -1,6 +1,6 @@
 const express = require('express')
 const createHttpError = require('http-errors')
-const { userSchema } = require('../configs/validation')
+const { userSchema, postSchema } = require('../configs/validation')
 
 const router = express.Router()
 
@@ -31,6 +31,26 @@ router.post('/register', async (req, res, next) => {
             err.status = 422
         next(err)
     }
+})
+
+router.post('/post', async (req, res, next) => {
+
+    try {
+        const post = await postSchema.validateAsync(req.body)
+
+        const postId = Date.now()
+
+        res.json({
+            message: "Post validation was successful. Post has been created successfully.",
+            post: Object.assign({postId}, post)
+        })
+    } 
+    catch(err){
+        if(err.isJoi === true)
+            err.status = 422
+        next(err)
+    }
+
 })
 
 router.use((req, res, next) => {

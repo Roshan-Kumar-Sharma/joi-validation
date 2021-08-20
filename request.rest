@@ -17,4 +17,16 @@ Content-Type: application/json
 
 ###
 
+POST  http://localhost:5555/post
+Content-Type: application/json
+
+{
+    "htmlContent": "<h1>hello<h1>",
+    "tags": ["#h1", "#h2"],
+    "reactions": {},
+    "postedBy": "roshan"
+}
+
+###
+
 POST http://localhost:5555/
