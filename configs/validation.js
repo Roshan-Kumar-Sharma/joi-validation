@@ -9,7 +9,7 @@ const userSchema = joi.object({
 
 const postSchema = joi.object({
     htmlContent: joi.string().required(),
-    tags: joi.array().items(joi.string().required()).required(),
+    tags: joi.array().items(joi.string().required()).max(5).required(),
     reactions: joi.object({
         clapped: joi.array()
     }),
