@@ -1,18 +1,25 @@
 const joi = require("joi");
 
-const userSchema = joi.object({
+const userFields = {
     username: joi
         .string()
         .pattern(
-            new RegExp("^(?!_)(?:[A-Za-z0-9]+|([_])(?!\1))*(?!_)([A-Za-z0-9])$")
+            new RegExp(
+                "^(?!_)(?:[A-Za-z0-9]+|([_])(?!\\1))*(?!_)([A-Za-z0-9])$",
+                "m"
+            )
         )
         .messages({
             "string.pattern.base":
-                "Username must not contain underscore at start and end and mutiple underscores in a row is not allowed",
+                "Username must only contain alphnumeric characters and must not contain underscore at start and end and mutiple underscores in a row is not allowed",
         })
         .min(3)
         .trim()
         .required(),
+};
+
+const userSchema = joi.object({
+    username: userFields.username,
     bio: joi.string(),
     email: joi.string().email().lowercase().required(),
     password: joi
